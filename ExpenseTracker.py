@@ -56,11 +56,19 @@ def view_all_expenses(expenses_list: list):
         print(f"{i}. {expense['category']} - {expense['amount']}")
     print()
 
+def delete_expense(expense_list: list, index: int):
+    try:
+        removed = expense_list.pop(index - 1)
+        return f"Deleted {removed['category']} expense."
+    except IndexError:
+        return "Invalid expense number."
+    
 def menu():
     print("1. Add Expense")
     print("2. View Expenses")
     print("3. Show Total")
-    print("4. Exit")
+    print("4. Delete Expense")
+    print("5. Exit")
 
 
 while True:
@@ -79,6 +87,11 @@ while True:
         print(f"Total Expense: {total_expenses(expenses)}\n")
         # total_expenses()
     elif choice == "4":
+        view_all_expenses(expenses)
+        index = get_user_amount("Enter expense number to delete: ")
+        print(delete_expense(expenses, int(index)))
+        print()
+    elif choice == "5":
         print("Goodbye!")
         break
     else:
