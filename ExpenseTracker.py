@@ -1,27 +1,54 @@
 expenses = []
 
-
-def add_expense():
-    category = str(input("Enter the Expense Category: ").strip())
-
-    try:
-        amount = float(input("Wnter the Expense Amount: "))
-        if amount <=0:
-            raise ValueError("Amount must be positive.")
-    except ValueError as e:
-        print(f"Invalid amount: {e}\n")
-        return
-    
-    expense = {
+def create_expense(category: str, amount: float = 0.0):
+    return {
         "category": category,
         "amount": amount
     }
-    
-    expenses.append(expense)
-    print("Expense added successfully!\n")
 
-def view_all_expenses():
-    if not expenses:
+def get_user_category(prompt="Enter category: "):
+    while True:
+        try:
+            return str(input(prompt))
+        except Exception:
+            print("Invalid category. Try again.")
+
+def get_user_amount(prompt="Enter amount: "):
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Invalid number. Try again.")
+
+def add_expense(expense_list: list, *, category: str, amount: float):
+    expense = create_expense(category, amount)
+    expense_list.append(expense)
+    return "Expense added successfully!"
+
+    # category = str(input("Enter the Expense Category: ").strip())
+    # try:
+    #     amount = float(input("Wnter the Expense Amount: "))
+    #     if amount <=0:
+    #         raise ValueError("Amount must be positive.")
+    # except ValueError as e:
+    #     print(f"Invalid amount: {e}\n")
+    #     return
+    # expense = {
+    #     "category": category,
+    #     "amount": amount
+    # }
+    # expenses.append(expense)
+    # print("Expense added successfully!\n")
+
+def total_expenses(expenses_list: list):
+    try:
+        total = sum(expense['amount'] for expense in expenses_list)
+        return total
+    except Exception as e:
+        print(f"Unexpected error: {e}\n")
+
+def view_all_expenses(expenses_list: list):
+    if not expenses_list:
         print("No expenses record.\n")
         return
     
@@ -29,27 +56,28 @@ def view_all_expenses():
         print(f"{i}. {expense['category']} - {expense['amount']}")
     print()
 
-def total_expenses():
-    try:
-        total = sum(expense['amount'] for expense in expenses)
-        print(f"Total Expenses: {total}\n")
-    except Exception as e:
-        print(f"Unexpected error: {e}\n")
-
-while True:
+def menu():
     print("1. Add Expense")
     print("2. View Expenses")
     print("3. Show Total")
     print("4. Exit")
+
+
+while True:
+    menu()
     
     choice = input("Choose an option: ")
     
     if choice == "1":
-        add_expense()
+        category = get_user_category()
+        amount = get_user_amount()
+        print(add_expense(expenses, category=category, amount=amount))
+        print()
     elif choice == "2":
-        view_all_expenses()
+        view_all_expenses(expenses)
     elif choice == "3":
-        total_expenses()
+        print(f"Total Expense: {total_expenses(expenses)}\n")
+        # total_expenses()
     elif choice == "4":
         print("Goodbye!")
         break
