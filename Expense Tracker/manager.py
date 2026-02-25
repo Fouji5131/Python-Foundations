@@ -1,5 +1,25 @@
 from models import create_expense
 
+def save_expenses(expense_list, filename="expenses.txt"):
+    with open(filename, "w") as file:
+        for exp in expense_list:
+            file.write(f"{exp['category']},{exp['amount']}\n")
+
+def load_expenses(filename="expenses.txt"):
+    expenses = []
+    try:
+        with open(filename, "r") as file:
+            for line in file:
+                category, amount = line.strip().split(",")
+                expenses.append({
+                    "category": category,
+                    "amount": float(amount)
+                })
+    except FileNotFoundError:
+        pass  # If file doesn't exist, start empty
+    
+    return expenses
+
 def add_expense(expense_list: list, *, category: str, amount: float):
     expense = create_expense(category, amount)
     expense_list.append(expense)

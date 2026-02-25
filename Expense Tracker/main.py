@@ -1,4 +1,4 @@
-from manager import add_expense, total_expenses, view_all_expenses, delete_expense
+from manager import add_expense, total_expenses, view_all_expenses, delete_expense, save_expenses, load_expenses
 from utils import get_user_category, get_user_amount
 
 def menu():
@@ -10,7 +10,7 @@ def menu():
 
 
 def main():
-    expenses = []
+    expenses = load_expenses()
 
 
     while True:
@@ -22,6 +22,7 @@ def main():
             category = get_user_category()
             amount = get_user_amount()
             print(add_expense(expenses, category=category, amount=amount))
+            save_expenses(expenses)
             print()
         elif choice == "2":
             view_all_expenses(expenses)
@@ -32,9 +33,11 @@ def main():
             view_all_expenses(expenses)
             index = get_user_amount("Enter expense number to delete: ")
             print(delete_expense(expenses, int(index)))
+            save_expenses(expenses)
             print()
         elif choice == "5":
             print("Goodbye!")
+            save_expenses(expenses)
             break
         else:
             print("Invalid choice. Try again.\n")
