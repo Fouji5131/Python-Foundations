@@ -29,8 +29,7 @@ def total_expenses():
     print(f"Total Expenses: {total}\n")
 
 while True:
-    print("1. Add Expense")1
-    FileNotFoundError11
+    print("1. Add Expense")
     print("2. View Expenses")
     print("3. Show Total")
     print("4. Exit")
