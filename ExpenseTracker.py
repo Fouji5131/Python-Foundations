@@ -1,5 +1,3 @@
-expenses = []
-
 def create_expense(category: str, amount: float = 0.0):
     return {
         "category": category,
@@ -71,28 +69,36 @@ def menu():
     print("5. Exit")
 
 
-while True:
-    menu()
-    
-    choice = input("Choose an option: ")
-    
-    if choice == "1":
-        category = get_user_category()
-        amount = get_user_amount()
-        print(add_expense(expenses, category=category, amount=amount))
-        print()
-    elif choice == "2":
-        view_all_expenses(expenses)
-    elif choice == "3":
-        print(f"Total Expense: {total_expenses(expenses)}\n")
+def main():
+    expenses = []
+
+
+    while True:
+        menu()
+        
+        choice = input("Choose an option: ")
+        
+        if choice == "1":
+            category = get_user_category()
+            amount = get_user_amount()
+            print(add_expense(expenses, category=category, amount=amount))
+            print()
+        elif choice == "2":
+            view_all_expenses(expenses)
+        elif choice == "3":
+            print(f"Total Expense: {total_expenses(expenses)}\n")
         # total_expenses()
-    elif choice == "4":
-        view_all_expenses(expenses)
-        index = get_user_amount("Enter expense number to delete: ")
-        print(delete_expense(expenses, int(index)))
-        print()
-    elif choice == "5":
-        print("Goodbye!")
-        break
-    else:
-        print("Invalid choice. Try again.\n")
+        elif choice == "4":
+            view_all_expenses(expenses)
+            index = get_user_amount("Enter expense number to delete: ")
+            print(delete_expense(expenses, int(index)))
+            print()
+        elif choice == "5":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Try again.\n")
+
+
+if __name__ == "__main__":
+    main()
