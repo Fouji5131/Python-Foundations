@@ -1,20 +1,32 @@
+import csv
 from models import create_expense
 
-def save_expenses(expense_list, filename="expenses.txt"):
-    with open(filename, "w") as file:
-        for exp in expense_list:
-            file.write(f"{exp['category']},{exp['amount']}\n")
+def save_expenses(expense_list, filename="expenses.csv"):
+    with open(filename, "w", newline="") as file:
+        writer = csv.DictWriter(file, fieldnames=["category", "amount"])
+        writer.writeheader()
+        writer.writerows(expense_list)
+        # for exp in expense_list:
+        #     file.write(f"{exp['category']},{exp['amount']}\n")
 
-def load_expenses(filename="expenses.txt"):
+def load_expenses(filename="expenses.csv"):
     expenses = []
     try:
         with open(filename, "r") as file:
-            for line in file:
-                category, amount = line.strip().split(",")
+            reader = csv.DictReader(file)
+
+            for row in reader:
                 expenses.append({
-                    "category": category,
-                    "amount": float(amount)
+                    "category": row["category"],
+                    "expense_list": float(row["amount"])
                 })
+
+            # for line in file:
+            #     category, amount = line.strip().split(",")
+            #     expenses.append({
+            #         "category": category,
+            #         "amount": float(amount)
+            #     })
     except FileNotFoundError:
         pass  # If file doesn't exist, start empty
     
