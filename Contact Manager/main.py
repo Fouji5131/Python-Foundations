@@ -1,4 +1,5 @@
 from manager import ContactManager
+from customErrors import InvalidPhoneError
 # from storage import save_contacts, load_contacts
 
 def main():
@@ -18,8 +19,11 @@ def main():
             name = input("Name: ")
             phone = input("Phone: ")
             email = input("Email: ")
-            manager.add_contact(name, phone, email)
 
+            try:
+                manager.add_contact(name, phone, email)
+            except InvalidPhoneError as e:
+                print(e)
             # add_contact(contacts)
             # save_contacts(contacts)
         elif choice == "2":

@@ -1,5 +1,6 @@
 import csv
 from contact import Contact
+from customErrors import InvalidPhoneError
 
 class ContactManager:
     def __init__(self, filename="contacts.csv"):
@@ -8,7 +9,10 @@ class ContactManager:
         self.load_contacts()
 
     def add_contact(self, name, phone, email):
+        self.validate_phone(phone)
+        
         contact = Contact(name, phone, email)
+        
         self.contacts.append(contact)
         self.save_contacts()
 
@@ -32,6 +36,13 @@ class ContactManager:
             if contact.name.lower() == name.lower():
                 return
         return None
+    
+    def validate_phone(phone):
+        if not phone.isdigit() or len(phone) < 10:
+            raise InvalidPhoneError("Phone number must be numeric and at least 10 digits")
+    
+    def sort_contacts(self):
+        self.contacts.sort(key=lambda c: c.name.lower())
 
     def save_contacts(self):
         with open(self.filename, mode="w", newline="") as file:
