@@ -27,6 +27,12 @@ class ContactManager:
         except IndexError:
             print("Invalid Index.")
 
+    def search_contact(self, name):
+        for contact in self.contacts:
+            if contact.name.lower() == name.lower():
+                return
+        return None
+
     def save_contacts(self):
         with open(self.filename, mode="w", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=["name", "phone", "email"])
