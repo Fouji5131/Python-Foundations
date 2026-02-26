@@ -8,9 +8,9 @@ def main():
     while True:
         print("1. Add Contact")
         print("2. View Contacts")
-        # print("3. Search Contact")
-        print("3. Delete Contact")
-        print("4. Exit")
+        print("3. Search Contact")
+        print("4. Delete Contact")
+        print("5. Exit")
  
         choice = input("Choose: ")
 
@@ -25,14 +25,15 @@ def main():
         elif choice == "2":
             manager.view_contacts()
             # view_contacts(contacts)
-        # elif choice == "3":
-        #     search_contact(contacts)
         elif choice == "3":
+            name = input("Search name: ")
+            manager.search_contact(name)
+        elif choice == "4":
             index = int(input("Enter contact number to delete: "))
             manager.delete_contact(index)
             # delete_contact(contacts)
             # save_contacts(contacts)
-        elif choice == "4":
+        elif choice == "5":
             # save_contacts(contacts)
             break
         else:
